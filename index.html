@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>5208301314</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,600&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="stage">
+  <div class="frame" id="frame">
+
+    <div class="screen active" id="lock">
+      <div class="dim-overlay"></div>
+      <div style="z-index:1;text-align:center;">
+        <div class="time" id="clock">5:20</div>
+        <div class="date" id="date">SUNDAY, AUGUST 9</div>
+      </div>
+
+      <div class="swipe" id="swipeUp">
+        <div class="chevrons"><span></span><span></span><span></span></div>
+        <div class="swipe-label">SWIPE UP</div>
+      </div>
+
+      <div class="lock-cam" id="lockCam" title="camera">
+        <svg viewBox="0 0 24 24" width="19" height="19" fill="none"
+            stroke="currentColor" stroke-width="1.6">
+          <path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/>
+          <circle cx="12" cy="13" r="3.4"/>
+        </svg>
+      </div>
+    </div>
+
+
+    <div class="screen" id="pin">
+      <div class="pin-title" id="pinTitle">Enter the password.</div>
+      <div class="dots-row" id="dotsRow"></div>
+      <div class="pad" id="pad">
+        <button data-k="1">1</button><button data-k="2">2</button><button data-k="3">3</button>
+        <button data-k="4">4</button><button data-k="5">5</button><button data-k="6">6</button>
+        <button data-k="7">7</button><button data-k="8">8</button><button data-k="9">9</button>
+        <button class="ghost" data-k="back">⌫</button>
+        <button data-k="0">0</button>
+        <div></div>
+      </div>
+    </div>
+
+    
+      <div class="screen" id="camview">
+      <div class="cam-topbar">RWICKY, SMILE! :D</div>
+      <div class="cam-viewfinder" id="camViewfinder">
+        <video id="camPhoto" autoplay muted loop playsinline></video>
+        <div class="cam-placeholder" id="camPlaceholder">Ricky photo<br><span style="opacity:.65">pic</span></div>
+        <div class="cam-grid"></div>
+        <div class="cam-corner tl"></div><div class="cam-corner tr"></div>
+        <div class="cam-corner bl"></div><div class="cam-corner br"></div>
+      </div>
+      <div class="cam-caption" id="camCaption">My love ♡</div>
+      <div class="cam-bottombar">
+        <div class="cam-thumb" id="camThumb"></div>
+        <div class="cam-shutter" id="camShutter"></div>
+        <div class="cam-flip">↺</div>
+      </div>
+      <button class="cam-close" id="camClose">✕</button>
+    </div>
+
+    <div class="screen" id="reveal">
+      <canvas id="revealCanvas" width="500" height="500"></canvas>
+      <div class="reveal-caption" id="revealCaption">So adorable! Won't you let me kiss you? (˶˘ ³˘(´͈ ᵕ `͈˶))</div>
+    </div>
+
+    <div class="screen" id="ask">
+      <div class="ask-card">
+        <div class="ask-msg" id="askMsg">Do you love me? ❤</div>
+        <div class="ask-btns" id="askBtns">
+          <button class="yes-btn" id="yesBtn">YES ❤</button>
+          <button class="no-btn" id="noBtn">no</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="screen" id="reward">
+      <div class="vn-name">૮ ˶ᵔ ᵕ ᵔ˶ ა</div>
+      <div class="vn-box" id="vnText"><span id="vnTyped"></span><span class="vn-cursor">▌</span></div>
+      <div class="museum" id="museum"></div>
+      <div class="continue-prompt" id="museumContinue">keep looking →</div>
+    </div>
+
+    <div class="screen" id="flood">
+      <div class="flood-wall" id="floodWall"></div>
+      <div class="flood-continue" id="floodContinue">tap when you're ready</div>
+    </div>
+
+    <div class="screen" id="sayback">
+      <div class="sb-card">
+        <div class="sb-q" id="sbQ"><span id="sbTyped"></span><span class="vn-cursor">▌</span></div>
+        <div class="sb-input-row">
+          <input id="sbInput" type="text" placeholder="say it back..." maxlength="60" />
+          <button id="sbSubmit">↵</button>
+        </div>
+        <div class="sb-mic" id="sbMicRow">
+          <div class="sb-mic-btn" id="sbMicBtn">🎤</div>
+          <span>or say it out loud</span>
+        </div>
+        <div class="sb-wrong" id="sbWrong"></div>
+      </div>
+    </div>
+
+    <div class="screen" id="reveal2">
+      <canvas id="revealCanvas2" width="500" height="500"></canvas>
+      <div class="reveal-caption" id="revealCaption2">You'll be the end of me ♡</div>
+    </div>
+
+    <div class="screen" id="ending2">
+      <div class="vn-name">૮ ˶ᵔ ᵕ ᵔ˶ ა</div>
+      <div class="vn-box" id="ending2Box"><span id="ending2Typed"></span><span class="vn-cursor">▌</span></div>
+      <div class="continue-prompt" id="ending2Continue">keep going →</div>
+    </div>
+
+    <div class="screen" id="ask2">
+      <div class="ask-card">
+        <div class="ask-msg" id="askMsg2">So... do you love me? ❤</div>
+        <div class="ask-btns" id="askBtns2">
+          <button class="yes-btn" id="yesBtn2">YES ❤</button>
+          <button class="no-btn" id="noBtn2">no</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="screen" id="release">
+      <div class="vn-name">૮ ˶ᵔ ᵕ ᵔ˶ ა</div>
+      <div class="msg" id="releaseMsg"><span class="big-line">YES, MY RWICKY, I LOVE YOU TOO!<br>5201314!!!<br>WO DE XIAOMAO.</span><br>Go if you must.<br>I'll be right here at 5:20 &lt;3</div>
+      <button class="reset-btn" id="resetBtn">↺ start over</button>
+    </div>
+
+    <div class="lightbox" id="photoLightbox">
+      <button class="lb-close" id="lbClose">✕</button>
+      <div class="lb-perspective">
+        <div class="lb-card" id="lbCard">
+          <div class="lb-face front" id="lbFront"></div>
+          <div class="lb-face back">
+            <div class="lb-back-date" id="lbDate"></div>
+            <div class="lb-back-note" id="lbNote"></div>
+            <div class="lb-back-tally" id="lbTally"></div>
+          </div>
+        </div>
+        <div class="lb-hint" id="lbHint">tap to flip</div>
+      </div>
+    </div>
+
+    <div class="grain" id="grain"></div>
+    <div class="scanlines" id="scan"></div>
+    <div class="cursor-glow" id="cursorGlow"></div>
+    <button class="exit-btn" id="exitBtn">✕</button>
+    <div class="exit-toast" id="exitToast">where are you going?</div>
+  </div>
+
+  <div class="music-widget" id="musicWidget">
+    <div class="music-toggle" id="musicToggle" title="mute/unmute">♪</div>
+    <div class="music-label" id="musicLabel">tap to unmute</div>
+    <a class="music-spotify" id="spotifyLink" href="#" target="_blank" rel="noopener" title="listen on Spotify">♫</a>
+  </div>
+  <audio id="bgAudio" preload="auto"></audio>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
