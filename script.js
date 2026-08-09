@@ -87,68 +87,118 @@
   }
   glowLoop();
 
-  /* BACKGROUND MUSIC*/
-  (function(){
-    const audio = $('bgAudio');
-    const widget = $('musicWidget');
-    const toggle = $('musicToggle');
-    const label = $('musicLabel');
-    const spotifyLink = $('spotifyLink');
+ /* BACKGROUND MUSIC */
+(function(){
+  const audio = $('bgAudio');
+  const widget = $('musicWidget');
+  const toggle = $('musicToggle');
+  const label = $('musicLabel');
+  const spotifyLink = $('spotifyLink');
 
-    if(SPOTIFY_PLAYLIST_URL){ spotifyLink.href = SPOTIFY_PLAYLIST_URL; }
-    else { spotifyLink.style.display = 'none'; }
+  if (SPOTIFY_PLAYLIST_URL) {
+    spotifyLink.href = SPOTIFY_PLAYLIST_URL;
+  } else {
+    spotifyLink.style.display = 'none';
+  }
 
-    if(BG_TRACKS.length === 0){
-      toggle.style.display = 'none';
-      label.textContent = SPOTIFY_PLAYLIST_URL ? 'play on spotify' : '';
-      if(!SPOTIFY_PLAYLIST_URL) widget.style.display = 'none';
+  if (BG_TRACKS.length === 0) {
+    toggle.style.display = 'none';
+    label.textContent = SPOTIFY_PLAYLIST_URL ? 'play on spotify' : '';
+
+    if (!SPOTIFY_PLAYLIST_URL) {
+      widget.style.display = 'none';
+    }
+
+    return;
+  }
+
+  audio.volume = 0.5;
+  audio.preload = 'auto';
+
+  let trackIndex = 0;
+  let started = false;
+  let muted = false;
+
+  function loadTrack(index) {
+    audio.src = BG_TRACKS[index % BG_TRACKS.length];
+    audio.load();
+  }
+
+  async function startMusic() {
+    if (started) return true;
+
+    try {
+      loadTrack(trackIndex);
+
+      await audio.play();
+
+      started = true;
+      muted = false;
+
+      toggle.classList.add('playing');
+      label.textContent = 'now playing';
+
+      return true;
+
+    } catch (error) {
+      console.warn('Background music could not start:', error);
+      return false;
+    }
+  }
+
+  async function playNextTrack() {
+    trackIndex = (trackIndex + 1) % BG_TRACKS.length;
+
+    loadTrack(trackIndex);
+
+    try {
+      await audio.play();
+    } catch (error) {
+      console.warn('Next track could not start:', error);
+    }
+  }
+
+  audio.addEventListener('ended', playNextTrack);
+
+  function firstInteraction() {
+    startMusic();
+
+    document.removeEventListener('pointerdown', firstInteraction);
+    document.removeEventListener('touchstart', firstInteraction);
+    document.removeEventListener('click', firstInteraction);
+  }
+  
+  document.addEventListener('pointerdown', firstInteraction, {
+    once: true,
+    passive: true
+  });
+
+  document.addEventListener('touchstart', firstInteraction, {
+    once: true,
+    passive: true
+  });
+
+  document.addEventListener('click', firstInteraction, {
+    once: true
+  });
+
+  toggle.addEventListener('click', async function(e) {
+    e.stopPropagation();
+
+    if (!started) {
+      await startMusic();
       return;
     }
 
-    audio.volume = 0.5;
-    let trackIndex = 0;
-    let started = false;
-    let muted = false;
+    muted = !muted;
+    audio.muted = muted;
 
-    function loadTrack(i){
-      audio.src = BG_TRACKS[i % BG_TRACKS.length];
-    }
-    function playCurrent(){
-      loadTrack(trackIndex);
-      audio.play().catch(()=>{
-       });
-    }
-    audio.addEventListener('ended', ()=>{
-      trackIndex = (trackIndex + 1) % BG_TRACKS.length;
-      playCurrent();
-    });
+    toggle.classList.toggle('playing', !muted);
+    label.textContent = muted ? 'tap to unmute' : 'now playing';
+  });
 
-    function startMusic(){
-      if(started) return;
-      started = true;
-      playCurrent();
-      toggle.classList.add('playing');
-      label.textContent = 'now playing';
-    }
-
-    function firstInteraction(){
-      startMusic();
-      document.removeEventListener('click', firstInteraction);
-      document.removeEventListener('touchstart', firstInteraction);
-    }
-    document.addEventListener('click', firstInteraction, {once:true});
-    document.addEventListener('touchstart', firstInteraction, {once:true, passive:true});
-
-    toggle.addEventListener('click', (e)=>{
-      e.stopPropagation();
-      if(!started){ startMusic(); return; }
-      muted = !muted;
-      audio.muted = muted;
-      toggle.classList.toggle('playing', !muted);
-      label.textContent = muted ? 'tap to unmute' : 'now playing';
-    });
-  })();
-
+})();
+ 
 
   /* Lockscreen Background */
   if(LOCKSCREEN_IMAGE_SRC){
