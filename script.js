@@ -692,14 +692,14 @@
       const transcript = e.results[0][0].transcript;
       handleAnswer(transcript);
     };
-    rec.onerror = ()=>{ $('sbMicBtn').classList.remove('listening'); $('sbWrong').textContent = "didn't catch that — try typing instead."; };
+    rec.onerror = ()=>{ $('sbMicBtn').classList.remove('listening'); $('sbWrong').textContent = "didn't catch that. try typing instead."; };
     rec.onend = ()=>{ $('sbMicBtn').classList.remove('listening'); };
   } else {
-    $('sbMicRow').innerHTML = "<span style=\"font-size:10px;color:var(--dim);\">voice input isn't supported here — type it instead</span>";
+    $('sbMicRow').innerHTML = "<span style=\"font-size:10px;color:var(--dim);\">voice input isn't supported here. type it instead</span>";
   }
 
   let exitTries = 0;
-  const exitLines = ["where are you going?","you don't want to leave. not really.","stay a little longer, Rwick.","...okay. go, if you have to."];
+  const exitLines = ["where are you going?","you don't want to leave.","stay a little longer, Rwick.","...okay. go, if you have to."];
   $('exitBtn').addEventListener('click', ()=>{
     exitTries++;
     const toastEl = $('exitToast');
